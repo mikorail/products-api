@@ -1,3 +1,7 @@
+Here’s the updated **README.md** with a section that links to the thought process documentation:
+
+---
+
 # Products API
 
 This is a RESTful API built with **Golang** using the **Gin** framework. The API allows you to manage customers, products, orders, and categories. It features full CRUD (Create, Read, Update, Delete) operations for each resource and is integrated with **PostgreSQL** for database storage and **Redis** for caching. The repository includes Swagger documentation for API reference as well as DDL (Data Definition Language) and DML (Data Manipulation Language) scripts for setting up the database.
@@ -24,6 +28,7 @@ This is a RESTful API built with **Golang** using the **Gin** framework. The API
   - [DML](#dml)
 - [Environment Variables](#environment-variables)
 - [Running the Application](#running-the-application)
+- [Thought Process](#thought-process)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -85,6 +90,13 @@ To execute the DDL script, run the following command in your PostgreSQL instance
 psql -U <username> -d <dbname> -f migrations/ddl.sql
 ```
 
+### DML
+
+The **DML** script (Data Manipulation Language) inserts sample data into the tables for testing purposes.
+
+```sql
+psql -U <username> -d <dbname> -f migrations/xxx_dml.sql
+```
 
 ## Environment Variables
 
@@ -125,6 +137,10 @@ You can run the tests using the command:
 go test ./...
 ```
 
+## Thought Process
+
+For a detailed explanation of the decision-making, optimization strategies, and challenges faced during the development process, please refer to the [**Thought Process**](thought_process.md) document.
+
 ## Contributing
 
 Contributions are welcome! Please submit a pull request or open an issue to improve the project.
@@ -134,5 +150,3 @@ Contributions are welcome! Please submit a pull request or open an issue to impr
 This project is licensed under the MIT License.
 
 ---
-
-Feel free to modify the `README.md` to fit your specific project needs.
