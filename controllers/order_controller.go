@@ -15,7 +15,15 @@ type OrderController struct {
 	Service *service.OrderService
 }
 
-// GetOrderHistory handles the request for fetching order history
+// GetOrderHistory godoc
+// @Summary      Get Order History
+// @Description  Fetch the order history for the user
+// @Tags         Orders
+// @Accept       json
+// @Produce      json
+// @Success      200  {array}   models.Order  "Order history retrieved successfully"
+// @Failure      500  {object}  map[string]interface{}  "Failed to fetch order history"
+// @Router       /orders/history [get]
 func (oc *OrderController) GetOrderHistory(c *gin.Context) {
 	orders, err := oc.Service.GetOrderHistory()
 	if err != nil {
@@ -25,7 +33,17 @@ func (oc *OrderController) GetOrderHistory(c *gin.Context) {
 	c.JSON(http.StatusOK, orders)
 }
 
-// CreateOrder handles the creation of a new order
+// CreateOrder godoc
+// @Summary      Create Order
+// @Description  Create a new order
+// @Tags         Orders
+// @Accept       json
+// @Produce      json
+// @Param        order  body      models.Order  true  "Order data"
+// @Success      201    {object}  models.Order  "Order created successfully"
+// @Failure      400    {object}  map[string]interface{}  "Invalid order data"
+// @Failure      500    {object}  map[string]interface{}  "Failed to create order"
+// @Router       /orders [post]
 func (oc *OrderController) CreateOrder(c *gin.Context) {
 	var order models.Order
 	if err := c.ShouldBindJSON(&order); err != nil {
@@ -41,7 +59,17 @@ func (oc *OrderController) CreateOrder(c *gin.Context) {
 	c.JSON(http.StatusCreated, order)
 }
 
-// PurchaseOrderRequest handles the creation of a new order
+// PurchaseOrder godoc
+// @Summary      Purchase Order
+// @Description  Create a new purchase order
+// @Tags         Orders
+// @Accept       json
+// @Produce      json
+// @Param        purchaseOrder  body      models.PurchaseOrderRequest  true  "Purchase order data"
+// @Success      200            {object}  models.PurchaseOrderRequest  "Purchase order created successfully"
+// @Failure      400            {object}  map[string]interface{}  "Invalid purchase order data"
+// @Failure      500            {object}  map[string]interface{}  "Failed to create purchase order"
+// @Router       /orders/purchase [post]
 func (oc *OrderController) PurchaseOrder(c *gin.Context) {
 	fmt.Println("params : ", c.Request)
 
@@ -59,7 +87,17 @@ func (oc *OrderController) PurchaseOrder(c *gin.Context) {
 	helpers.RespondSuccess(c, "Orders created successfully successfully", order)
 }
 
-// GetProducts retrieves a paginated list of costumers
+// GetOrders godoc
+// @Summary      Get Orders
+// @Description  Retrieve a paginated list of orders
+// @Tags         Orders
+// @Accept       json
+// @Produce      json
+// @Param        page       query     int     false  "Page number (default: 1)"
+// @Param        pageSize   query     int     false  "Number of items per page (default: 10)"
+// @Success      200        {object}  map[string]interface{}  "Orders retrieved successfully"
+// @Failure      500        {object}  map[string]interface{}  "Failed to retrieve orders"
+// @Router       /orders [get]
 func (oc *OrderController) GetOrders(c *gin.Context) {
 	page, _ := strconv.Atoi(c.Query("page"))
 	if page == 0 {
@@ -80,7 +118,16 @@ func (oc *OrderController) GetOrders(c *gin.Context) {
 	c.JSON(http.StatusOK, customers)
 }
 
-// GetOrderByID retrieves a order by ID
+// GetOrderByID godoc
+// @Summary      Get Order by ID
+// @Description  Retrieve an order by its ID
+// @Tags         Orders
+// @Accept       json
+// @Produce      json
+// @Param        id   path      string  true  "Order ID"
+// @Success      200  {object}  models.Order  "Order retrieved successfully"
+// @Failure      404  {object}  map[string]interface{}  "Order not found"
+// @Router       /orders/{id} [get]
 func (oc *OrderController) GetOrderByID(c *gin.Context) {
 	id := c.Param("id")
 	order, err := oc.Service.GetCostumerByID(id)
@@ -92,7 +139,17 @@ func (oc *OrderController) GetOrderByID(c *gin.Context) {
 	c.JSON(http.StatusOK, order)
 }
 
-// UpdateOrder updates a order by ID
+// UpdateOrder godoc
+// @Summary      Update Order
+// @Description  Update an existing order by its ID
+// @Tags         Orders
+// @Accept       json
+// @Produce      json
+// @Param        order  body      models.Order  true  "Updated order data"
+// @Success      200    {object}  models.Order  "Order updated successfully"
+// @Failure      400    {object}  map[string]interface{}  "Invalid input data"
+// @Failure      500    {object}  map[string]interface{}  "Failed to update order"
+// @Router       /orders/{id} [put]
 func (oc *OrderController) UpdateOrder(c *gin.Context) {
 	var costumer models.Order
 	if err := c.ShouldBindJSON(&costumer); err != nil {
@@ -108,7 +165,16 @@ func (oc *OrderController) UpdateOrder(c *gin.Context) {
 	c.JSON(http.StatusOK, costumer)
 }
 
-// DeleteOrder deletes a costumer by ID
+// DeleteOrder godoc
+// @Summary      Delete Order
+// @Description  Delete an order by its ID
+// @Tags         Orders
+// @Accept       json
+// @Produce      json
+// @Param        id   path      string  true  "Order ID"
+// @Success      204  {object}  nil  "Order deleted successfully"
+// @Failure      500  {object}  map[string]interface{}  "Failed to delete order"
+// @Router       /orders/{id} [delete]
 func (oc *OrderController) DeleteOrder(c *gin.Context) {
 	id := c.Param("id")
 	if err := oc.Service.DeleteOrder(id); err != nil {

@@ -15,7 +15,20 @@ type ProductController struct {
 	Service *service.ProductService
 }
 
-// GetProductsWithTotalSold handles the request for fetching products with total sold quantities
+// GetProductsWithTotalSold godoc
+// @Summary      Get Products with Total Sold
+// @Description  Fetch a list of products along with their total sold quantities, supporting pagination, filtering, and sorting.
+// @Tags         Products
+// @Accept       json
+// @Produce      json
+// @Param        page       query     int     false  "Page number (default: 1)"
+// @Param        limit      query     int     false  "Number of items per page (default: 10)"
+// @Param        category   query     string  false  "Filter by product category"
+// @Param        sort_by    query     string  false  "Field to sort by (e.g., 'total_sold_amount')"
+// @Param        order      query     string  false  "Order of sorting (asc or desc)"
+// @Success      200        {object}  map[string]interface{}  "Success with total products count and products list"
+// @Failure      500        {object}  map[string]interface{}  "Internal Server Error"
+// @Router       /products/with-total-sold [get]
 func (pc *ProductController) GetProductsWithTotalSold(c *gin.Context) {
 	// Read query parameters for pagination, filtering, sorting, and ordering
 	page, _ := strconv.Atoi(c.Query("page")) // Current page number
@@ -46,7 +59,23 @@ func (pc *ProductController) GetProductsWithTotalSold(c *gin.Context) {
 	})
 }
 
-// GetProductReport handles the request for fetching a product report for dashboards
+// GetProductReport godoc
+// @Summary      Get Product Report
+// @Description  Fetch a product report for dashboards with pagination and filtering
+// @Tags         Products
+// @Accept       json
+// @Produce      json
+// @Param        page         query     int     false  "Page number (default: 1)"
+// @Param        pageSize     query     int     false  "Number of items per page (default: 10)"
+// @Param        name         query     string  false  "Filter by product name"
+// @Param        category_id  query     string  false  "Filter by category ID"
+// @Param        price_min    query     string  false  "Filter by minimum price"
+// @Param        price_max    query     string  false  "Filter by maximum price"
+// @Param        sort_field   query     string  false  "Field to sort by"
+// @Param        sort_order   query     string  false  "Order of sorting (asc or desc)"
+// @Success      200          {object}  map[string]interface{}  "Product report retrieved successfully"
+// @Failure      500          {object}  map[string]interface{}  "Internal Server Error"
+// @Router       /products/report [get]
 func (pc *ProductController) GetProductReport(c *gin.Context) {
 	page, _ := strconv.Atoi(c.Query("page"))
 	if page == 0 {
@@ -89,7 +118,17 @@ func (pc *ProductController) GetProductReport(c *gin.Context) {
 	helpers.RespondSuccess(c, "Order history retrieved successfully", report)
 }
 
-// CreateProduct handles the creation of a new product
+// CreateProduct godoc
+// @Summary      Create Product
+// @Description  Create a new product
+// @Tags         Products
+// @Accept       json
+// @Produce      json
+// @Param        product  body      models.Product  true   "Product data"
+// @Success      200      {object}  map[string]interface{}  "Product created successfully"
+// @Failure      400      {object}  map[string]interface{}  "Invalid product data"
+// @Failure      500      {object}  map[string]interface{}  "Internal Server Error"
+// @Router       /products [post]
 func (pc *ProductController) CreateProduct(c *gin.Context) {
 	var product models.Product
 	if err := c.ShouldBindJSON(&product); err != nil {
@@ -112,7 +151,17 @@ func (pc *ProductController) CreateProduct(c *gin.Context) {
 	helpers.RespondSuccess(c, "Product created successfully", product)
 }
 
-// GetProducts retrieves a paginated list of products
+// CreateProduct godoc
+// @Summary      Create Product
+// @Description  Create a new product
+// @Tags         Products
+// @Accept       json
+// @Produce      json
+// @Param        product  body      models.Product  true   "Product data"
+// @Success      200      {object}  map[string]interface{}  "Product created successfully"
+// @Failure      400      {object}  map[string]interface{}  "Invalid product data"
+// @Failure      500      {object}  map[string]interface{}  "Internal Server Error"
+// @Router       /products [post]
 func (pc *ProductController) GetProducts(c *gin.Context) {
 	page, _ := strconv.Atoi(c.Query("page"))
 	if page == 0 {
@@ -133,7 +182,17 @@ func (pc *ProductController) GetProducts(c *gin.Context) {
 	helpers.RespondSuccess(c, "Order history retrieved successfully", products)
 }
 
-// GetProductByID retrieves a product by ID
+// GetProducts godoc
+// @Summary      Get Products
+// @Description  Retrieve a paginated list of products
+// @Tags         Products
+// @Accept       json
+// @Produce      json
+// @Param        page       query     int     false  "Page number (default: 1)"
+// @Param        pageSize   query     int     false  "Number of items per page (default: 10)"
+// @Success      200        {object}  map[string]interface{}  "Products retrieved successfully"
+// @Failure      500        {object}  map[string]interface{}  "Internal Server Error"
+// @Router       /products [get]
 func (pc *ProductController) GetProductByID(c *gin.Context) {
 	id := c.Param("id")
 	idUint, err := strconv.ParseUint(id, 10, 32) // Parse string to uint
@@ -151,8 +210,18 @@ func (pc *ProductController) GetProductByID(c *gin.Context) {
 	c.JSON(http.StatusOK, product)
 }
 
-// UpdateProduct updates a product by ID
-// UpdateProduct updates a product by ID
+// UpdateProduct godoc
+// @Summary      Update Product
+// @Description  Update a product by its ID
+// @Tags         Products
+// @Accept       json
+// @Produce      json
+// @Param        id       path      string         true   "Product ID"
+// @Param        product  body      models.Product true   "Updated product data"
+// @Success      200      {object}  models.Product "Product updated successfully"
+// @Failure      400      {object}  map[string]interface{}  "Invalid input data"
+// @Failure      500      {object}  map[string]interface{}  "Failed to update product"
+// @Router       /products/{id} [put]
 func (pc *ProductController) UpdateProduct(c *gin.Context) {
 	id := c.Param("id")
 	var product models.Product
@@ -184,7 +253,16 @@ func (pc *ProductController) UpdateProduct(c *gin.Context) {
 	c.JSON(http.StatusOK, product)
 }
 
-// DeleteProduct deletes a product by ID
+// DeleteProduct godoc
+// @Summary      Delete Product
+// @Description  Delete a product by its ID
+// @Tags         Products
+// @Accept       json
+// @Produce      json
+// @Param        id   path      string  true  "Product ID"
+// @Success      204  {object}  nil  "Product deleted successfully"
+// @Failure      500  {object}  map[string]interface{}  "Failed to delete product"
+// @Router       /products/{id} [delete]
 func (pc *ProductController) DeleteProduct(c *gin.Context) {
 	id := c.Param("id")
 	if err := pc.Service.DeleteProduct(id); err != nil {
@@ -195,7 +273,21 @@ func (pc *ProductController) DeleteProduct(c *gin.Context) {
 	c.JSON(http.StatusNoContent, nil)
 }
 
-// GetProductsWithTotalSold handles the request for fetching products with total sold quantities
+// GetProductsWithTotalSoldReportCSV godoc
+// @Summary      Get Products with Total Sold (CSV)
+// @Description  Fetch products with total sold quantities and download as a CSV report
+// @Tags         Products
+// @Accept       json
+// @Produce      json
+// @Param        name         query     string  false  "Filter by product name"
+// @Param        category_id  query     string  false  "Filter by category ID"
+// @Param        price_min    query     string  false  "Filter by minimum price"
+// @Param        price_max    query     string  false  "Filter by maximum price"
+// @Param        sort_field   query     string  false  "Field to sort by"
+// @Param        sort_order   query     string  false  "Order of sorting (asc or desc)"
+// @Success      200          {object}  map[string]interface{}  "CSV report generated successfully"
+// @Failure      500          {object}  map[string]interface{}  "Failed to fetch products"
+// @Router       /products/with-total-sold/csv [get]
 func (pc *ProductController) GetProductsWithTotalSoldReportCSV(c *gin.Context) {
 	filter := make(map[string]interface{})
 
@@ -232,7 +324,23 @@ func (pc *ProductController) GetProductsWithTotalSoldReportCSV(c *gin.Context) {
 	})
 }
 
-// GetProductsWithTotalSold handles the request for fetching products with total sold quantities
+// GetProductsByFilter godoc
+// @Summary      Get Products by Filter
+// @Description  Fetch products with applied filters, supporting pagination and sorting
+// @Tags         Products
+// @Accept       json
+// @Produce      json
+// @Param        page         query     int     false  "Page number (default: 1)"
+// @Param        pageSize     query     int     false  "Number of items per page (default: 10)"
+// @Param        name         query     string  false  "Filter by product name"
+// @Param        category_id  query     string  false  "Filter by category ID"
+// @Param        price_min    query     string  false  "Filter by minimum price"
+// @Param        price_max    query     string  false  "Filter by maximum price"
+// @Param        sort_field   query     string  false  "Field to sort by"
+// @Param        sort_order   query     string  false  "Order of sorting (asc or desc)"
+// @Success      200          {object}  map[string]interface{}  "Products retrieved successfully"
+// @Failure      500          {object}  map[string]interface{}  "Failed to fetch products"
+// @Router       /products/filter [get]
 func (pc *ProductController) GetProductsByFilter(c *gin.Context) {
 	page, _ := strconv.Atoi(c.Query("page"))
 	if page == 0 {

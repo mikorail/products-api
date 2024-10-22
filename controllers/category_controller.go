@@ -13,7 +13,17 @@ type CategoryController struct {
 	Service *service.CategoryService
 }
 
-// CreateCategory handles the creation of a new category
+// CreateCategory godoc
+// @Summary      Create Category
+// @Description  Create a new category
+// @Tags         Categories
+// @Accept       json
+// @Produce      json
+// @Param        category  body      models.Category  true  "Category data"
+// @Success      201       {object}  models.Category  "Category created successfully"
+// @Failure      400       {object}  map[string]interface{}  "Invalid input data"
+// @Failure      500       {object}  map[string]interface{}  "Failed to create category"
+// @Router       /categories [post]
 func (cc *CategoryController) CreateCategory(c *gin.Context) {
 	var category models.Category
 	if err := c.ShouldBindJSON(&category); err != nil {
@@ -29,7 +39,15 @@ func (cc *CategoryController) CreateCategory(c *gin.Context) {
 	c.JSON(http.StatusCreated, category)
 }
 
-// GetCategories retrieves a list of categories
+// GetCategories godoc
+// @Summary      Get Categories
+// @Description  Retrieve a list of categories
+// @Tags         Categories
+// @Accept       json
+// @Produce      json
+// @Success      200       {object}  []models.Category  "Categories retrieved successfully"
+// @Failure      500       {object}  map[string]interface{}  "Failed to retrieve categories"
+// @Router       /categories [get]
 func (cc *CategoryController) GetCategories(c *gin.Context) {
 	categories, err := cc.Service.GetCategories()
 	if err != nil {
@@ -40,7 +58,16 @@ func (cc *CategoryController) GetCategories(c *gin.Context) {
 	c.JSON(http.StatusOK, categories)
 }
 
-// GetCategoryByID retrieves a category by ID
+// GetCategoryByID godoc
+// @Summary      Get Category by ID
+// @Description  Retrieve a category by its ID
+// @Tags         Categories
+// @Accept       json
+// @Produce      json
+// @Param        id    path      string  true  "Category ID"
+// @Success      200   {object}  models.Category  "Category retrieved successfully"
+// @Failure      404   {object}  map[string]interface{}  "Category not found"
+// @Router       /categories/{id} [get]
 func (cc *CategoryController) GetCategoryByID(c *gin.Context) {
 	id := c.Param("id")
 	category, err := cc.Service.GetCategoryByID(id)
@@ -52,7 +79,17 @@ func (cc *CategoryController) GetCategoryByID(c *gin.Context) {
 	c.JSON(http.StatusOK, category)
 }
 
-// UpdateProduct updates a category by ID
+// UpdateCategory godoc
+// @Summary      Update Category
+// @Description  Update an existing category by its ID
+// @Tags         Categories
+// @Accept       json
+// @Produce      json
+// @Param        category  body      models.Category  true  "Updated category data"
+// @Success      200       {object}  models.Category  "Category updated successfully"
+// @Failure      400       {object}  map[string]interface{}  "Invalid input data"
+// @Failure      500       {object}  map[string]interface{}  "Failed to update category"
+// @Router       /categories/{id} [put]
 func (cc *CategoryController) UpdateCategory(c *gin.Context) {
 	var category models.Category
 	if err := c.ShouldBindJSON(&category); err != nil {
@@ -68,7 +105,16 @@ func (cc *CategoryController) UpdateCategory(c *gin.Context) {
 	c.JSON(http.StatusOK, category)
 }
 
-// DeleteCategory deletes a category by ID
+// DeleteCategory godoc
+// @Summary      Delete Category
+// @Description  Delete a category by its ID
+// @Tags         Categories
+// @Accept       json
+// @Produce      json
+// @Param        id   path      string  true  "Category ID"
+// @Success      204  {object}  nil  "Category deleted successfully"
+// @Failure      500  {object}  map[string]interface{}  "Failed to delete category"
+// @Router       /categories/{id} [delete]
 func (cc *CategoryController) DeleteCategory(c *gin.Context) {
 	id := c.Param("id")
 	if err := cc.Service.DeleteCategory(id); err != nil {

@@ -14,7 +14,17 @@ type CustomerController struct {
 	Service *service.CustomerService
 }
 
-// CreateCustomer handles the creation of a new customer
+// CreateCustomer godoc
+// @Summary      Create Customer
+// @Description  Create a new customer
+// @Tags         Customers
+// @Accept       json
+// @Produce      json
+// @Param        customer  body      models.Customer  true  "Customer data"
+// @Success      201       {object}  models.Customer  "Customer created successfully"
+// @Failure      400       {object}  map[string]interface{}  "Invalid input data"
+// @Failure      500       {object}  map[string]interface{}  "Failed to create customer"
+// @Router       /customers [post]
 func (cc *CustomerController) CreateCustomer(c *gin.Context) {
 	var customer models.Customer
 	if err := c.ShouldBindJSON(&customer); err != nil {
@@ -30,7 +40,17 @@ func (cc *CustomerController) CreateCustomer(c *gin.Context) {
 	c.JSON(http.StatusCreated, customer)
 }
 
-// GetProducts retrieves a paginated list of costumers
+// GetCustomers godoc
+// @Summary      Get Customers
+// @Description  Retrieve a paginated list of customers
+// @Tags         Customers
+// @Accept       json
+// @Produce      json
+// @Param        page       query     int     false  "Page number (default: 1)"
+// @Param        pageSize   query     int     false  "Number of items per page (default: 10)"
+// @Success      200        {object}  map[string]interface{}  "Customers retrieved successfully"
+// @Failure      500        {object}  map[string]interface{}  "Failed to retrieve customers"
+// @Router       /customers [get]
 func (cc *CustomerController) GetCustomers(c *gin.Context) {
 	page, _ := strconv.Atoi(c.Query("page"))
 	if page == 0 {
@@ -51,7 +71,16 @@ func (cc *CustomerController) GetCustomers(c *gin.Context) {
 	c.JSON(http.StatusOK, customers)
 }
 
-// GetCustomerByID retrieves a customer by ID
+// GetCustomerByID godoc
+// @Summary      Get Customer by ID
+// @Description  Retrieve a customer by its ID
+// @Tags         Customers
+// @Accept       json
+// @Produce      json
+// @Param        id   path      string  true  "Customer ID"
+// @Success      200  {object}  models.Customer  "Customer retrieved successfully"
+// @Failure      404  {object}  map[string]interface{}  "Customer not found"
+// @Router       /customers/{id} [get]
 func (cc *CustomerController) GetCustomerByID(c *gin.Context) {
 	id := c.Param("id")
 	customer, err := cc.Service.GetCostumerByID(id)
@@ -63,7 +92,17 @@ func (cc *CustomerController) GetCustomerByID(c *gin.Context) {
 	c.JSON(http.StatusOK, customer)
 }
 
-// UpdateCustomer updates a customer by ID
+// UpdateCustomer godoc
+// @Summary      Update Customer
+// @Description  Update an existing customer by its ID
+// @Tags         Customers
+// @Accept       json
+// @Produce      json
+// @Param        customer  body      models.Customer  true  "Updated customer data"
+// @Success      200       {object}  models.Customer  "Customer updated successfully"
+// @Failure      400       {object}  map[string]interface{}  "Invalid input data"
+// @Failure      500       {object}  map[string]interface{}  "Failed to update customer"
+// @Router       /customers/{id} [put]
 func (cc *CustomerController) UpdateCustomer(c *gin.Context) {
 	var costumer models.Customer
 	if err := c.ShouldBindJSON(&costumer); err != nil {
@@ -79,7 +118,16 @@ func (cc *CustomerController) UpdateCustomer(c *gin.Context) {
 	c.JSON(http.StatusOK, costumer)
 }
 
-// DeleteCustomer deletes a costumer by ID
+// DeleteCustomer godoc
+// @Summary      Delete Customer
+// @Description  Delete a customer by its ID
+// @Tags         Customers
+// @Accept       json
+// @Produce      json
+// @Param        id   path      string  true  "Customer ID"
+// @Success      204  {object}  nil  "Customer deleted successfully"
+// @Failure      500  {object}  map[string]interface{}  "Failed to delete customer"
+// @Router       /customers/{id} [delete]
 func (cc *CustomerController) DeleteCustomer(c *gin.Context) {
 	id := c.Param("id")
 	if err := cc.Service.DeleteCustomer(id); err != nil {

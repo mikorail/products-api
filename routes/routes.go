@@ -1,3 +1,18 @@
+// Package routes Products API.
+//
+//	Schemes: http
+//	BasePath: /
+//	Version: 1.0.0
+//	Host: localhost:8080
+//
+//	Consumes:
+//	- application/json
+//
+//	Produces:
+//	- application/json
+//
+// swagger:meta
+
 package routes
 
 import (
@@ -7,11 +22,16 @@ import (
 	"products-api/service"
 
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
-
+	ginSwagger.WrapHandler(swaggerfiles.Handler,
+		ginSwagger.URL("http://localhost:8080/swagger/doc.json"),
+		ginSwagger.DefaultModelsExpandDepth(-1))
+	// url := ginSwagger.URL("http://localhost:8080/swagger/doc.json")
 	// Initialize repositories
 	productRepo := &repository.ProductRepository{DB: config.DB}
 	customerRepo := &repository.CustomerRepository{DB: config.DB}
@@ -76,6 +96,8 @@ func SetupRouter() *gin.Engine {
 	// r.GET("/orders/:id", orderController.GetOrder)
 	r.PUT("/orders/:id", orderController.UpdateOrder)
 	r.DELETE("/orders/:id", orderController.DeleteOrder)
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	return r
 }
