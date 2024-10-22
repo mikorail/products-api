@@ -1,5 +1,3 @@
-Here’s a draft for the **`thought_process.md`** file documenting the thought process, constraints, and ambiguities in the project.
-
 ---
 
 # Thought Process, Constraints, and Ambiguities
