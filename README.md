@@ -59,9 +59,10 @@ http://localhost:<port>/swagger/index.html
 ├── models           # Contains data models that map to PostgreSQL tables
 ├── services         # Business logic and interaction with the database
 ├── helpers          # Utility functions (response handling, validation, etc.)
-├── database         # Database connection setup (PostgreSQL and Redis)
+├── config         # Database connection setup (PostgreSQL and Redis)
 ├── migrations       # Contains DDL and DML scripts for setting up the database
 ├── docs             # Swagger documentation setup
+├── routes           # Routes or API Endpoints
 └── main.go          # Entry point for the application
 ```
 
@@ -84,13 +85,6 @@ To execute the DDL script, run the following command in your PostgreSQL instance
 psql -U <username> -d <dbname> -f migrations/ddl.sql
 ```
 
-### DML
-
-The **DML** script (Data Manipulation Language) inserts sample data into the tables for testing purposes.
-
-```sql
-psql -U <username> -d <dbname> -f migrations/dml.sql
-```
 
 ## Environment Variables
 

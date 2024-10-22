@@ -1,0 +1,13 @@
+INSERT INTO public.order_items (id, order_id, product_id, quantity, unit_price) VALUES(1, 101, 15, 2, 47);
+INSERT INTO public.order_items (id, order_id, product_id, quantity, unit_price) VALUES(2, 102, 15, 2, 47);
+INSERT INTO public.order_items (id, order_id, product_id, quantity, unit_price) VALUES(3, 103, 15, 2, 47);
+INSERT INTO public.order_items (id, order_id, product_id, quantity, unit_price) VALUES(4, 104, 15, 2, 47);
+INSERT INTO public.order_items (id, order_id, product_id, quantity, unit_price) VALUES(5, 105, 15, 5, 47);
+INSERT INTO public.order_items (id, order_id, product_id, quantity, unit_price) VALUES(6, 106, 15, 5, 47);
+INSERT INTO public.order_items (id, order_id, product_id, quantity, unit_price) VALUES(7, 107, 15, 5, 47);
+INSERT INTO public.order_items (id, order_id, product_id, quantity, unit_price) VALUES(8, 108, 17, 50, 687);
+INSERT INTO public.order_items (id, order_id, product_id, quantity, unit_price) VALUES(9, 109, 58, 250, 788);
+INSERT INTO public.order_items (id, order_id, product_id, quantity, unit_price) VALUES(10, 110, 58, 8, 788);
+INSERT INTO public.order_items (id, order_id, product_id, quantity, unit_price) VALUES(11, 111, 58, 8, 788);
+INSERT INTO public.order_items (id, order_id, product_id, quantity, unit_price) VALUES(12, 112, 58, 8, 788);
+INSERT INTO public.order_items (id, order_id, product_id, quantity, unit_price) VALUES(13, 113, 58, 8, 788);
