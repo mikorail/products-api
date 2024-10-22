@@ -28,10 +28,11 @@ import (
 
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
+
 	ginSwagger.WrapHandler(swaggerfiles.Handler,
-		ginSwagger.URL("http://localhost:8080/swagger/doc.json"),
+		ginSwagger.URL("/swagger/doc.json"),
 		ginSwagger.DefaultModelsExpandDepth(-1))
-	// url := ginSwagger.URL("http://localhost:8080/swagger/doc.json")
+
 	// Initialize repositories
 	productRepo := &repository.ProductRepository{DB: config.DB}
 	customerRepo := &repository.CustomerRepository{DB: config.DB}
